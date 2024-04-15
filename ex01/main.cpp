@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 13:52:03 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/15 18:54:02 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/15 23:27:57 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,16 @@
 #include <iostream>
 
 #define S(n) sizeof(n)/sizeof(int)
-// #define S sizeof(int)
+
+int rand_gen()
+{
+	return(rand() % 100);
+}
+
+int rand_gen_max()
+{
+	return(rand());
+}
 
 void test1()
 {
@@ -52,35 +61,44 @@ void test2()
 	sp.print();
 }
 
-// void test3()
-// {
-// 	std::cout << "****list test****" << "\n";
-// 	std::list<int> l;
-// 	l.push_back(5);
-// 	l.push_back(6);
-// 	l.push_back(7);
-// 	l.push_back(6);
-// 	std::list<int>::iterator found = easyfind(l, 6);
-// 	std::cout << "found element: " << *found  << ", index: " << std::distance(l.begin(), found) << "\n";
-// }
+void test3()
+{
+	std::cout << "****range add test****" << "\n";
+	Span sp = Span(100);
+	sp.print();
+	// int n[] = {1, 6, 7, 8, 9, 4, 23, 41, 2, 8};
+	std::vector<int>v(100, 1);
+	std::cout << *v.end() << "\n";
+	sp.rangeAdd(v.begin(), v.end() - 1);
+	sp.print();
+}
 
-// void test4()
-// {
-// 	std::cout << "****not found test****" << "\n";
-// 	std::list<int> l;
-// 	l.push_back(5);
-// 	l.push_back(6);
-// 	l.push_back(7);
-// 	l.push_back(6);
-// 	try
-// 	{
-// 		easyfind(l, 42);
-// 	}
-// 	catch (std::exception &e)
-// 	{
-// 		std::cerr << e.what() << "\n";
-// 	}
-// }
+void test4()
+{
+	std::cout << "****rand fill test****" << "\n";
+	Span sp = Span(1000);
+	sp.randFill(rand_gen);
+	sp.print();
+}
+
+void test5()
+{
+	std::cout << "****longest span test****" << "\n";
+	Span sp = Span(10);
+	sp.randFill(rand_gen);
+	sp.print();
+	std::cout << "longest span: " << sp.longestSpan() << "\n";
+	sp.longestSpan();
+}
+
+void test6()
+{
+	std::cout << "****shortest span test****" << "\n";
+	Span sp = Span(100000);
+	sp.randFill(rand_gen_max);
+	// sp.print();
+	std::cout << "shortest span: " << sp.shortestSpan() << "\n";
+}
 
 // void test5()
 // {
@@ -100,8 +118,28 @@ int main()
 {
 	test1();
 	test2();
-	// test3();
-	// test4();
-	// test5();
+	test3();
+	test4();
+	test5();
+	test6();
 	return (0);
 }
+// int f() {
+//     return 1;
+// }
+
+// int main() {
+//     std::vector<int> v(5);
+
+//     // Generate values in the vector using the function f
+//     std::generate_n(v.begin(), v.size(), f);
+
+//     // Print the generated values
+//     // for (const auto& value : v) {
+//     //     std::cout << value << " ";
+//     // }
+// 	std::cout << *v.begin() << "\n";
+//     std::cout << std::endl;
+
+//     return 0;
+// }

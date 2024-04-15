@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 18:58:05 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/15 18:58:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/15 22:39:39 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,17 @@ public:
 	u_int getN() const;
 	void addNumber(int num);
 	void batchAdd(int *nums, u_int size);
-	void shortestSpan();
-	void longestSpan();
+	void randFill(int rand_gen(void));
+	int shortestSpan();
+	int longestSpan();
 	void print();
+	template <typename InputIterator>
+	void rangeAdd(InputIterator first, InputIterator last)
+	{
+		for (InputIterator it = first; it <= last; ++it)
+			addNumber(*it);
+	}
+
 
 	class NoAddException;
 	class NoSpanException;
