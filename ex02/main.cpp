@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 13:52:03 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/16 21:23:36 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/17 00:45:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include <list>
 #include <iostream>
 #include "MutantStack.hpp"
+
+// void leaks()
+// {
+// 	system("leaks stack");
+// }
 
 void test1(MutantStack<int> &mstack)
 {
@@ -83,11 +88,28 @@ void test5(MutantStack<int> &mstack)
 	MutantStack<int>::const_reverse_iterator cr_it = mstack.crbegin();
 	std::cout << "last element " << *cr_it << "\n";
 	// *cr_it = 3;
+	*it = 5;
 }
 
 void test6(MutantStack<int> &mstack)
 {
-	std::cout << "****shortest span test****" << "\n";
+	std::cout << "****constructor test****" << "\n";
+	MutantStack<int>::iterator it = mstack.begin(); //deque iterator
+	++it;
+	MutantStack<int>::iterator it2;//derived class iterator
+	MutantStack<int>::iterator it3(it2);//first copy class iterator
+	it2 = it;
+	std::cout << "it " << *it << "\n";
+	std::cout << "it2 " << *it2 << "\n";
+	std::cout << "it3 " << *it3 << "\n";
+	it3 = mstack.end();
+	++it3;
+	std::cout << "it " << *it << "\n";
+	std::cout << "it2 " << *it2 << "\n";
+	std::cout << "it3 " << *it3 << "\n";
+
+	// std::deque<int>::iterator it_d;
+	// MutantStack<int>::iterator it3(it2);
 }
 
 // void test5()
@@ -106,6 +128,7 @@ void test6(MutantStack<int> &mstack)
 
 int main()
 {
+	// atexit(leaks);
 	std::cout << "****creating stack(subject test part1)****" << "\n";
 	MutantStack<int> mstack;
 	mstack.push(5);
@@ -136,7 +159,7 @@ int main()
 	test3(mstack);
 	test4(lst);
 	test5(mstack);
-	// test6();
+	test6(mstack);
 	return (0);
 }
 // int f() {

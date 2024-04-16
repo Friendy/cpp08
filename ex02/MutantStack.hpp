@@ -18,14 +18,15 @@ public:
 
 	/*CONSTRUCTORS*/
 	MutantStack<T>(){};
-	MutantStack(MutantStack const &original)
+
+	//Assignment operator:
+	MutantStack<T> &operator=(MutantStack const &original)
 	{
-		if (this != &original)
+		std::stack<T>::operator=(original);
 		return(*this);
 	}
 
-	//Assignment operator:
-	MutantStack &operator=(MutantStack const &original)
+	MutantStack<T>(MutantStack const &original)
 	{
 		*this = original;
 	}
@@ -34,7 +35,15 @@ public:
 	class iterator : public deq_iterator
 	{
 		public:
-			iterator(const deq_iterator& iter) : deq_iterator(iter){}
+			iterator() : deq_iterator(){}
+			iterator &operator=(iterator const &original)
+			{
+				deq_iterator::operator=(original);
+				return(*this);
+			}
+			iterator(iterator const &original){std::cout << "copy constr \n";}
+			iterator(deq_iterator const& original) : deq_iterator(original){std::cout << "inherited copy constr \n";}
+			~iterator(){}
 	};
 
 	class reverse_iterator : public deq_r_iterator
