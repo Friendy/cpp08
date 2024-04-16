@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 13:52:03 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/16 14:51:02 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:23:36 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,96 +14,81 @@
 #include <list>
 #include <iostream>
 #include "MutantStack.hpp"
-// #include "MutantStack.tpp"
 
-// #define S(n) sizeof(n)/sizeof(int)
-
-// int rand_gen()
-// {
-// 	return(rand() % 100);
-// }
-
-// int rand_gen_max()
-// {
-// 	return(rand());
-// }
-
-void test1()
+void test1(MutantStack<int> &mstack)
 {
-	std::cout << "****subject test****" << "\n";
-	MutantStack<int> mstack;
-	mstack.push(5);
-	mstack.push(17);
-	std::cout << mstack.top() << std::endl;
-	mstack.pop();
-	std::cout << mstack.size() << std::endl;
-	mstack.push(3);
-	mstack.push(5);
-	mstack.push(737);
-	//[...]
-	mstack.push(0);
-	// std::cout << typeid(std::deque<int>.).name() << std::endl;
+	std::cout << "****testing iterators(subject test part2)****" << "\n";
 	MutantStack<int>::iterator it = mstack.begin();
 	MutantStack<int>::iterator ite = mstack.end();
-++it;
---it;
-while (it != ite) {
-    std::cout << *it << std::endl;
-++it; }
-std::stack<int> s(mstack);
+	++it;
+	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
 }
 
-// void test2()
-// {
-// 	std::cout << "****batch add test****" << "\n";
-// 	Span sp = Span(10);
-// 	sp.print();
-// 	int n[] = {1, 6, 7, 8, 9, 4};
-// 	sp.batchAdd(n, S(n));
-// 	sp.print();
-// 	int k[] = {34, 62, 42, 92, 31, 56};
-// 	sp.batchAdd(k, S(k));
-// 	sp.print();
-// }
+void test2(std::list<int> &mstack)
+{
+	std::cout << "****list test****" << "\n";
+	std::list<int>::iterator it = mstack.begin();
+	std::list<int>::iterator ite = mstack.end();
+	++it;
+	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+}
 
-// void test3()
-// {
-// 	std::cout << "****range add test****" << "\n";
-// 	Span sp = Span(100);
-// 	sp.print();
-// 	// int n[] = {1, 6, 7, 8, 9, 4, 23, 41, 2, 8};
-// 	std::vector<int>v(100, 1);
-// 	std::cout << *v.end() << "\n";
-// 	sp.rangeAdd(v.begin(), v.end() - 1);
-// 	sp.print();
-// }
+void test3(MutantStack<int> &mstack)
+{
+	std::cout << "****testing reverse iterators****" << "\n";
+	MutantStack<int>::reverse_iterator it = mstack.rbegin();
+	MutantStack<int>::reverse_iterator ite = mstack.rend();
+	++it;
+	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+}
 
-// void test4()
-// {
-// 	std::cout << "****rand fill test****" << "\n";
-// 	Span sp = Span(1000);
-// 	sp.randFill(rand_gen);
-// 	sp.print();
-// }
+void test4(std::list<int> &mstack)
+{
+	std::cout << "****list test with reverse iterators****" << "\n";
+	std::list<int>::reverse_iterator it = mstack.rbegin();
+	std::list<int>::reverse_iterator ite = mstack.rend();
+	++it;
+	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+}
 
-// void test5()
-// {
-// 	std::cout << "****longest span test****" << "\n";
-// 	Span sp = Span(10);
-// 	sp.randFill(rand_gen);
-// 	sp.print();
-// 	std::cout << "longest span: " << sp.longestSpan() << "\n";
-// 	sp.longestSpan();
-// }
+void test5(MutantStack<int> &mstack)
+{
+	std::cout << "****const iterator test****" << "\n";
+	MutantStack<int>::iterator it = mstack.begin();
+	std::cout << "first element " << *it << "\n";
+	*it = 42;
+	MutantStack<int>::const_iterator const_it = mstack.cbegin();
+	std::cout << "first element " << *const_it << "\n";
+	// *const_it = 3;
+	MutantStack<int>::const_reverse_iterator cr_it = mstack.crbegin();
+	std::cout << "last element " << *cr_it << "\n";
+	// *cr_it = 3;
+}
 
-// void test6()
-// {
-// 	std::cout << "****shortest span test****" << "\n";
-// 	Span sp = Span(100000);
-// 	sp.randFill(rand_gen_max);
-// 	// sp.print();
-// 	std::cout << "shortest span: " << sp.shortestSpan() << "\n";
-// }
+void test6(MutantStack<int> &mstack)
+{
+	std::cout << "****shortest span test****" << "\n";
+}
 
 // void test5()
 // {
@@ -121,11 +106,36 @@ std::stack<int> s(mstack);
 
 int main()
 {
-	test1();
-	// test2();
-	// test3();
-	// test4();
-	// test5();
+	std::cout << "****creating stack(subject test part1)****" << "\n";
+	MutantStack<int> mstack;
+	mstack.push(5);
+	mstack.push(17);
+	std::cout << mstack.top() << std::endl;
+	mstack.pop();
+	std::cout << mstack.size() << std::endl;
+	mstack.push(3);
+	mstack.push(5);
+	mstack.push(737);
+	//[...]
+	mstack.push(0);
+	std::cout << "****creating list \"copy\" of the stack****" << "\n";
+	std::list<int> lst;
+	lst.push_back(5);
+	lst.push_back(17);
+	std::cout << lst.back() << std::endl;
+	lst.pop_back();
+	std::cout << lst.size() << std::endl;
+	lst.push_back(3);
+	lst.push_back(5);
+	lst.push_back(737);
+	//[...]
+	lst.push_back(0);
+
+	test1(mstack);
+	test2(lst);
+	test3(mstack);
+	test4(lst);
+	test5(mstack);
 	// test6();
 	return (0);
 }

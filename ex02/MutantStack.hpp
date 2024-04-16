@@ -9,14 +9,15 @@
 template <typename T>
 class MutantStack : public std::stack<T>{
 
-typedef typename std::deque<T>::iterator deque_iterator;
-
-private:
+typedef typename std::deque<T>::iterator deq_iterator;
+typedef typename std::deque<T>::reverse_iterator deq_r_iterator;
+typedef typename std::deque<T>::const_iterator deq_c_iterator;
+typedef typename std::deque<T>::const_reverse_iterator deq_cr_iterator;
 
 public:
 
 	/*CONSTRUCTORS*/
-	MutantStack<T>(){std::cout << "class created" << std::endl;};
+	MutantStack<T>(){};
 	MutantStack(MutantStack const &original)
 	{
 		if (this != &original)
@@ -30,23 +31,39 @@ public:
 	}
 
 	/*Iterators*/
-	class iterator : public deque_iterator
+	class iterator : public deq_iterator
 	{
 		public:
-			iterator(const deque_iterator& iter) : deque_iterator(iter){}
+			iterator(const deq_iterator& iter) : deq_iterator(iter){}
 	};
 
-
-	// class deque_iterator : public std::iterator{};
-	MutantStack<T>::iterator begin()
+	class reverse_iterator : public deq_r_iterator
 	{
-		return(this->c.begin());
-	}
+		public:
+			reverse_iterator(const deq_r_iterator& iter) : deq_r_iterator(iter){}
+	};
 
-	MutantStack<T>::iterator end()
+	class const_iterator : public deq_c_iterator
 	{
-		return(this->c.end());
-	}
+		public:
+			const_iterator(const deq_c_iterator& iter) : deq_c_iterator(iter){}
+	};
+
+	class const_reverse_iterator : public deq_cr_iterator
+	{
+		public:
+			const_reverse_iterator(const deq_cr_iterator& iter) : deq_cr_iterator(iter){}
+	};
+
+	MutantStack<T>::iterator begin(){return(this->c.begin());}
+	MutantStack<T>::reverse_iterator rbegin(){return(this->c.rbegin());}
+	MutantStack<T>::const_iterator cbegin(){return(this->c.cbegin());}
+	MutantStack<T>::const_reverse_iterator crbegin(){return(this->c.crbegin());}
+
+	MutantStack<T>::iterator end(){return(this->c.end());}
+	MutantStack<T>::reverse_iterator rend(){return(this->c.rend());}
+	MutantStack<T>::const_iterator cend(){return(this->c.cend());}
+	MutantStack<T>::const_reverse_iterator crend(){return(this->c.crend());}
 
 	/*DESTRUCTOR*/
 	~MutantStack(){};
