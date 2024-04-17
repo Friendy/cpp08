@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 13:52:03 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/15 13:27:55 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/17 15:41:28 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void test1()
 {
 	std::cout << "****array test****" << "\n";
-	std::array <int, 10>a = {5, 3, 7, 8, 3, 79, 76};
+	std::array <int, 10>a = {5, 7, 8, 3, 79, 3, 76};
 	int *found = easyfind(a, 3);
 	std::cout << "found element: " << *found << ", index: " << found - a.begin() << "\n";
 }

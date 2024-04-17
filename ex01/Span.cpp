@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 18:58:00 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/17 13:58:34 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/17 15:38:31 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,39 @@ Span::Span(Span const &original)
 }
 
 /*FUNCTIONS*/
-u_int Span::getN() const
-{
-	return(this->_N);
-}
-
 void Span::addNumber(int num)
 {
 	if (_nums.size() < _N)
 		_nums.push_back(num);
 	else
 		throw NoAddException();
+}
+
+int Span::shortestSpan()
+{
+	if (_nums.size() <= 1)
+		throw NoSpanException();
+	Span tmp(*this);
+	tmp.sort();
+	int span_candidate = *(tmp._nums.begin() + 1) - *(tmp._nums.begin());
+	for (std::vector<int>::iterator it = tmp._nums.begin() + 1; it < tmp._nums.end() - 1; ++it)
+		span_candidate = std::min(span_candidate, *(it + 1) - *it);
+	return(span_candidate);
+}
+
+int Span::longestSpan()
+{
+	if (_nums.size() <= 1)
+		throw NoSpanException();
+	return(*std::max_element(_nums.begin(), _nums.end()) - *std::min_element(_nums.begin(), _nums.end()));
+}
+
+void Span::randFill(u_int n, int rand_gen(void))
+{
+	std::vector<int> v(n);
+	srand(time(NULL));
+	std::generate_n(v.begin(), n, rand_gen);
+	this->rangeAdd(v.begin(), v.end() - 1);
 }
 
 void Span::print() const
@@ -79,42 +101,14 @@ void Span::print() const
 		std::cout << "The span is empty \n";
 }
 
-
-void Span::randFill(u_int n, int rand_gen(void))
-{
-	std::vector<int> v(n);
-	srand(time(NULL));
-	std::generate_n(v.begin(), n, rand_gen);
-	this->rangeAdd(v.begin(), v.end() - 1);
-}
-
-int Span::shortestSpan()
-{
-	if (_nums.size() <= 1)
-		throw NoSpanException();
-	int span_candidate = -1;
-	Span tmp(*this);
-	tmp.sort();
-	for (std::vector<int>::iterator it = tmp._nums.begin(); it < tmp._nums.end() - 1; ++it)
-	{
-		if (span_candidate == -1)
-			span_candidate = *(it + 1) - *it;
-		else
-			span_candidate = std::min(span_candidate, *(it + 1) - *it);
-	}
-	return(span_candidate);
-}
-
-int Span::longestSpan()
-{
-	if (_nums.size() <= 1)
-		throw NoSpanException();
-	return(*std::max_element(_nums.begin(), _nums.end()) - *std::min_element(_nums.begin(), _nums.end()));
-}
-
 void Span::sort()
 {
 	std::sort(_nums.begin(), _nums.end());
+}
+
+u_int Span::getN() const
+{
+	return(this->_N);
 }
 
 /*DESTRUCTOR*/
