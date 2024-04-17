@@ -6,20 +6,13 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 13:52:03 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/17 11:16:24 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/17 12:31:40 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <array>
 #include <list>
 #include <iostream>
 #include "MutantStack.hpp"
-
-// void leaks()
-// {
-// 	system("leaks stack");
-// }
-
 
 void test1(MutantStack<int> &mstack)
 {
@@ -173,7 +166,7 @@ void test11(MutantStack<int> &mstack)
 	MutantStack<int> mstack1;
 	mstack1.push(54);
 	mstack1.push(42);
-	MutantStack<int>::const_reverse_iterator it1 = mstack.crbegin(); 
+	MutantStack<int>::const_reverse_iterator it1 = mstack.crbegin();
 	++it1;
 	MutantStack<int>::const_reverse_iterator it2 = mstack1.crbegin();
 	std::cout << "iterator 1 " << *it1 << "\n";
@@ -194,11 +187,14 @@ void test12()
 	words.push("sandwich");
 	words.push("clock");
 	print_stack<std::string>(words);
+	MutantStack<std::string>::iterator *it = new MutantStack<std::string>::iterator();
+	*it = words.begin();
+	std::cout << "first word: " << *(*it) << "\n";
+	delete(it);
 }
 
 int main()
 {
-	// atexit(leaks);
 	std::cout << "****creating stack(subject test part1)****" << "\n";
 	MutantStack<int> mstack;
 	mstack.push(5);

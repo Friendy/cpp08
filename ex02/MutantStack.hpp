@@ -69,6 +69,7 @@ public:
 			}
 			const_iterator(const_iterator const &original): deq_c_iterator(original){}
 			const_iterator(const deq_c_iterator& iter) : deq_c_iterator(iter){}
+			~const_iterator(){}
 	};
 
 	class const_reverse_iterator : public deq_cr_iterator
@@ -82,6 +83,7 @@ public:
 			}
 			const_reverse_iterator(const_reverse_iterator const &original): deq_cr_iterator(original){}
 			const_reverse_iterator(const deq_cr_iterator& iter) : deq_cr_iterator(iter){}
+			~const_reverse_iterator(){}
 	};
 
 	MutantStack<T>::iterator begin(){return(this->c.begin());}
@@ -98,11 +100,11 @@ public:
 	~MutantStack(){};
 };
 
-template <typename U>
-void print_stack(MutantStack<U> &mstack)
+template <typename T>
+void print_stack(MutantStack<T> &mstack)
 {
-	typename MutantStack<U>::iterator it = mstack.begin();
-	typename MutantStack<U>::iterator ite = mstack.end();
+	typename MutantStack<T>::iterator it = mstack.begin();
+	typename MutantStack<T>::iterator ite = mstack.end();
 	while (it != ite - 1)
 	{
 		std::cout << *it << ", ";
