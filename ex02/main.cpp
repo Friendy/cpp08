@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 13:52:03 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/17 00:45:44 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:16:24 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 // {
 // 	system("leaks stack");
 // }
+
 
 void test1(MutantStack<int> &mstack)
 {
@@ -91,40 +92,109 @@ void test5(MutantStack<int> &mstack)
 	*it = 5;
 }
 
+
 void test6(MutantStack<int> &mstack)
 {
-	std::cout << "****constructor test****" << "\n";
-	MutantStack<int>::iterator it = mstack.begin(); //deque iterator
-	++it;
-	MutantStack<int>::iterator it2;//derived class iterator
-	MutantStack<int>::iterator it3(it2);//first copy class iterator
-	it2 = it;
-	std::cout << "it " << *it << "\n";
-	std::cout << "it2 " << *it2 << "\n";
-	std::cout << "it3 " << *it3 << "\n";
-	it3 = mstack.end();
-	++it3;
-	std::cout << "it " << *it << "\n";
-	std::cout << "it2 " << *it2 << "\n";
-	std::cout << "it3 " << *it3 << "\n";
-
-	// std::deque<int>::iterator it_d;
-	// MutantStack<int>::iterator it3(it2);
+	std::cout << "****MutantStack copy constructor test****" << "\n";
+	MutantStack<int> mstack_copy(mstack);
+	print_stack<int>(mstack_copy);
+	MutantStack<int>::iterator it = mstack_copy.begin();
+	*it = 42;
+	print_stack<int>(mstack_copy);
+	print_stack<int>(mstack);
 }
 
-// void test5()
-// {
-// 	std::cout << "****empty container test****" << "\n";
-// 	std::list<int> l;
-// 	try
-// 	{
-// 		easyfind(l, 42);
-// 	}
-// 	catch (std::exception &e)
-// 	{
-// 		std::cerr << e.what() << "\n";
-// 	}
-// }
+void test7(MutantStack<int> &mstack)
+{
+	std::cout << "****MutantStack assignment test****" << "\n";
+	MutantStack<int> *mstack1 = new MutantStack<int>();
+	(*mstack1).push(123);
+	(*mstack1).push(464);
+	(*mstack1).push(344);
+	print_stack<int>(*mstack1);
+	*mstack1 = mstack;
+	print_stack<int>(*mstack1);
+	print_stack<int>(mstack);
+	MutantStack<int>::iterator it = (*mstack1).begin();
+	*it = 42;
+	print_stack<int>(*mstack1);
+	print_stack<int>(mstack);
+	delete(mstack1);
+}
+
+void test8(MutantStack<int> &mstack)
+{
+	std::cout << "****iterator copy constructor test****" << "\n";
+	MutantStack<int>::iterator it_second = mstack.begin(); 
+	++it_second;
+	MutantStack<int>::iterator it_first(it_second);
+	std::cout << "it_first " << *it_first << "\n";
+	std::cout << "it_second " << *it_second << "\n";
+	--it_first;
+	std::cout << "it_first " << *it_first << "\n";
+	std::cout << "it_second " << *it_second << "\n";
+}
+
+void test9(MutantStack<int> &mstack)
+{
+	std::cout << "****iterator assignment test****" << "\n";
+	MutantStack<int> mstack1;
+	mstack1.push(54);
+	mstack1.push(42);
+	MutantStack<int>::iterator it1 = mstack.begin(); 
+	++it1;
+	MutantStack<int>::iterator it2 = mstack1.begin();
+	std::cout << "iterator 1 " << *it1 << "\n";
+	std::cout << "iterator 2 " << *it2<< "\n";
+	it2 = it1;
+	std::cout << "iterator 1 " << *it1 << "\n";
+	std::cout << "iterator 2 " << *it2 << "\n";
+	--it2;
+	std::cout << "iterator 1 " << *it1 << "\n";
+	std::cout << "iterator 2 " << *it2 << "\n";
+}
+
+void test10(MutantStack<int> &mstack)
+{
+	std::cout << "****const reverse iterator copy constructor test****" << "\n";
+	MutantStack<int>::const_reverse_iterator it_second = mstack.crbegin(); 
+	++it_second;
+	MutantStack<int>::const_reverse_iterator it_first(it_second);
+	std::cout << "it_first " << *it_first << "\n";
+	std::cout << "it_second " << *it_second << "\n";
+	--it_first;
+	std::cout << "it_first " << *it_first << "\n";
+	std::cout << "it_second " << *it_second << "\n";
+}
+
+void test11(MutantStack<int> &mstack)
+{
+	std::cout << "****const reverse iterator assignment test****" << "\n";
+	MutantStack<int> mstack1;
+	mstack1.push(54);
+	mstack1.push(42);
+	MutantStack<int>::const_reverse_iterator it1 = mstack.crbegin(); 
+	++it1;
+	MutantStack<int>::const_reverse_iterator it2 = mstack1.crbegin();
+	std::cout << "iterator 1 " << *it1 << "\n";
+	std::cout << "iterator 2 " << *it2<< "\n";
+	it2 = it1;
+	std::cout << "iterator 1 " << *it1 << "\n";
+	std::cout << "iterator 2 " << *it2 << "\n";
+	--it2;
+	std::cout << "iterator 1 " << *it1 << "\n";
+	std::cout << "iterator 2 " << *it2 << "\n";
+}
+
+void test12()
+{
+	std::cout << "****string stack test****" << "\n";
+	MutantStack<std::string> words;
+	words.push("school");
+	words.push("sandwich");
+	words.push("clock");
+	print_stack<std::string>(words);
+}
 
 int main()
 {
@@ -160,24 +230,11 @@ int main()
 	test4(lst);
 	test5(mstack);
 	test6(mstack);
+	test7(mstack);
+	test8(mstack);
+	test9(mstack);
+	test10(mstack);
+	test11(mstack);
+	test12();
 	return (0);
 }
-// int f() {
-//     return 1;
-// }
-
-// int main() {
-//     std::vector<int> v(5);
-
-//     // Generate values in the vector using the function f
-//     std::generate_n(v.begin(), v.size(), f);
-
-//     // Print the generated values
-//     // for (const auto& value : v) {
-//     //     std::cout << value << " ";
-//     // }
-// 	std::cout << *v.begin() << "\n";
-//     std::cout << std::endl;
-
-//     return 0;
-// }

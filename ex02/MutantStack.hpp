@@ -1,7 +1,5 @@
 #ifndef MUTANTSTACK_HPP
 # define MUTANTSTACK_HPP
-# include <string>
-# include <iostream>
 # include <stack>
 # include <iterator>
 # include <deque>
@@ -41,26 +39,48 @@ public:
 				deq_iterator::operator=(original);
 				return(*this);
 			}
-			iterator(iterator const &original){std::cout << "copy constr \n";}
-			iterator(deq_iterator const& original) : deq_iterator(original){std::cout << "inherited copy constr \n";}
+			iterator(iterator const &original): deq_iterator(original){}
+			iterator(deq_iterator const& original) : deq_iterator(original){}
 			~iterator(){}
 	};
 
 	class reverse_iterator : public deq_r_iterator
 	{
 		public:
+			reverse_iterator() : deq_r_iterator(){}
+			reverse_iterator &operator=(reverse_iterator const &original)
+			{
+				deq_r_iterator::operator=(original);
+				return(*this);
+			}
+			reverse_iterator(reverse_iterator const &original): deq_r_iterator(original){}
 			reverse_iterator(const deq_r_iterator& iter) : deq_r_iterator(iter){}
+			~reverse_iterator(){}
 	};
 
 	class const_iterator : public deq_c_iterator
 	{
 		public:
+			const_iterator() : deq_c_iterator(){}
+			const_iterator &operator=(const_iterator const &original)
+			{
+				deq_c_iterator::operator=(original);
+				return(*this);
+			}
+			const_iterator(const_iterator const &original): deq_c_iterator(original){}
 			const_iterator(const deq_c_iterator& iter) : deq_c_iterator(iter){}
 	};
 
 	class const_reverse_iterator : public deq_cr_iterator
 	{
 		public:
+			const_reverse_iterator() : deq_cr_iterator(){}
+			const_reverse_iterator &operator=(const_reverse_iterator const &original)
+			{
+				deq_cr_iterator::operator=(original);
+				return(*this);
+			}
+			const_reverse_iterator(const_reverse_iterator const &original): deq_cr_iterator(original){}
 			const_reverse_iterator(const deq_cr_iterator& iter) : deq_cr_iterator(iter){}
 	};
 
@@ -77,5 +97,18 @@ public:
 	/*DESTRUCTOR*/
 	~MutantStack(){};
 };
+
+template <typename U>
+void print_stack(MutantStack<U> &mstack)
+{
+	typename MutantStack<U>::iterator it = mstack.begin();
+	typename MutantStack<U>::iterator ite = mstack.end();
+	while (it != ite - 1)
+	{
+		std::cout << *it << ", ";
+		++it;
+	}
+	std::cout << *mstack.crbegin() << std::endl;
+}
 
 #endif
