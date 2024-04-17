@@ -6,11 +6,13 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 18:58:00 by mrubina           #+#    #+#             */
-/*   Updated: 2024/04/15 23:37:19 by mrubina          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:58:34 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
+
+typedef std::vector<int>::iterator iterator;
 
 class Span::NoAddException : public std::exception
 {
@@ -63,11 +65,11 @@ void Span::addNumber(int num)
 		throw NoAddException();
 }
 
-void Span::print()
+void Span::print() const
 {
 	if (!_nums.empty())
 	{
-		for(std::vector<int>::iterator it = _nums.begin(); it < _nums.end() - 1; ++it)
+		for(std::vector<int>::const_iterator it = _nums.cbegin(); it < _nums.cend() - 1; ++it)
 		{
 			std::cout << *it << ", ";
 		}
@@ -77,31 +79,22 @@ void Span::print()
 		std::cout << "The span is empty \n";
 }
 
-void Span::batchAdd(int *nums, u_int size)
-{
-	int space_left = _N - _nums.size();
-	if (space_left > 0)
-	{
-		size = std::min(size, static_cast<u_int>(space_left));
-		std::vector<int>::iterator it = _nums.end();
-		_nums.insert(it, nums, nums + size);
-	}
-}
 
-void Span::randFill(int rand_gen(void))
+void Span::randFill(u_int n, int rand_gen(void))
 {
-	std::vector<int> v(_N);
+	std::vector<int> v(n);
 	srand(time(NULL));
-	std::generate_n(v.begin(), _N, rand_gen);
+	std::generate_n(v.begin(), n, rand_gen);
 	this->rangeAdd(v.begin(), v.end() - 1);
 }
 
 int Span::shortestSpan()
 {
+	if (_nums.size() <= 1)
+		throw NoSpanException();
 	int span_candidate = -1;
-
 	Span tmp(*this);
-	std::sort(tmp._nums.begin(), tmp._nums.end());
+	tmp.sort();
 	for (std::vector<int>::iterator it = tmp._nums.begin(); it < tmp._nums.end() - 1; ++it)
 	{
 		if (span_candidate == -1)
@@ -114,18 +107,15 @@ int Span::shortestSpan()
 
 int Span::longestSpan()
 {
+	if (_nums.size() <= 1)
+		throw NoSpanException();
 	return(*std::max_element(_nums.begin(), _nums.end()) - *std::min_element(_nums.begin(), _nums.end()));
 }
 
-// const std::vector Span::getNums() const
-// {
-// 	return(this->_nums);
-// }
-
-// void Span::setNums(std::vector nums)
-// {
-// 	this->_nums = nums;
-// }
+void Span::sort()
+{
+	std::sort(_nums.begin(), _nums.end());
+}
 
 /*DESTRUCTOR*/
 Span::~Span(){}
